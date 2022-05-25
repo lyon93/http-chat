@@ -4,11 +4,18 @@ import { UsersService } from './users.service';
 
 describe('UsersController', () => {
   let controller: UsersController;
-
+  const mockUserService = {
+    findOne: jest.fn().mockImplementation((arg: any) => Promise.resolve({})),
+  };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
-      providers: [UsersService],
+      providers: [
+        {
+          provide: UsersService,
+          useValue: mockUserService,
+        },
+      ],
     }).compile();
 
     controller = module.get<UsersController>(UsersController);
