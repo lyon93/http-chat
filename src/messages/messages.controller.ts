@@ -8,6 +8,7 @@ import {
   NotFoundException,
   Request,
   UseGuards,
+  BadRequestException,
 } from '@nestjs/common';
 import { MessagesService } from './messages.service';
 import { CreateMessageDto } from './dto/create-message.dto';
@@ -29,6 +30,10 @@ export class MessagesController {
     );
     if (!user) {
       throw new NotFoundException('User not found');
+    }
+
+    if (!user.active) {
+      throw new BadRequestException('Inactive user');
     }
     return this.messagesService.create(user, createMessageDto);
   }
