@@ -13,7 +13,7 @@ export class User {
   email: string;
 
   @Column({ default: true })
-  isActive: boolean;
+  active: boolean;
 
   @Column()
   @MinLength(8)
