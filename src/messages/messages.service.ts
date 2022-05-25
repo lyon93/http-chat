@@ -19,8 +19,8 @@ export class MessagesService {
     return this.messageRepository.save(message);
   }
 
-  findAll() {
-    return `This action returns all messages`;
+  findAll(user: User) {
+    return this.messageRepository.find({ where: { user } });
   }
 
   findOne(id: number) {
