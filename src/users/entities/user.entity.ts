@@ -1,6 +1,7 @@
+import { Message } from './../../messages/entities/message.entity';
 import { Exclude } from 'class-transformer';
 import { MinLength } from 'class-validator';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -19,4 +20,7 @@ export class User {
   @MinLength(8)
   @Exclude()
   password: string;
+
+  @OneToMany(() => Message, (message) => message.user)
+  messages: Message[];
 }
