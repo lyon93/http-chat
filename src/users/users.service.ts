@@ -10,14 +10,17 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-  ) {}
+  ) { }
 
   create(createUserDto: CreateUserDto): Promise<User> {
     const user = Object.assign({}, createUserDto);
     return this.usersRepository.save(user);
   }
 
-  findAll(): Promise<User[]> {
+  findAll(state?: string): Promise<User[]> {
+    if (state === 'active') {
+      return this.usersRepository.find({ where: { active: true } });
+    }
     return this.usersRepository.find();
   }
 
