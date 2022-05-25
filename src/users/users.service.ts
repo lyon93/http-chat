@@ -10,7 +10,7 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-  ) { }
+  ) {}
 
   create(createUserDto: CreateUserDto): Promise<User> {
     const user = Object.assign({}, createUserDto);
