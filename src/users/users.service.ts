@@ -28,7 +28,11 @@ export class UsersService {
     return this.usersRepository.findOne({ where: { email } });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(email: string, updateUserDto: UpdateUserDto): Promise<User> {
+    const currentUser: User = await this.findByEmail(email);
+    Object.keys(updateUserDto)
+      .filter((key) => key in currentUser)
+      .forEach((key) => (currentUser[key] = updateUserDto[key]));
+    return this.usersRepository.save(currentUser);
   }
 }

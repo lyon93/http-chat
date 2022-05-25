@@ -8,7 +8,7 @@ describe('UsersService', () => {
   const mockUser: User = {
     id: 1,
     email: 'test@gmail.com',
-    isActive: true,
+    active: true,
     password: 'asdkjasd#',
     username: 'test',
   };
