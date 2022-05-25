@@ -1,11 +1,22 @@
+import { Message } from './entities/message.entity';
+import { User } from './../users/entities/user.entity';
 import { Injectable } from '@nestjs/common';
 import { CreateMessageDto } from './dto/create-message.dto';
-import { UpdateMessageDto } from './dto/update-message.dto';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class MessagesService {
-  create(createMessageDto: CreateMessageDto) {
-    return 'This action adds a new message';
+  constructor(
+    @InjectRepository(Message)
+    private messageRepository: Repository<Message>,
+  ) { }
+
+  create(user: User, createMessageDto: CreateMessageDto) {
+    let message: Message = new Message();
+    message.body = createMessageDto.body;
+    message.user = user;
+    return this.messageRepository.save(message);
   }
 
   findAll() {
@@ -14,13 +25,5 @@ export class MessagesService {
 
   findOne(id: number) {
     return `This action returns a #${id} message`;
-  }
-
-  update(id: number, updateMessageDto: UpdateMessageDto) {
-    return `This action updates a #${id} message`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} message`;
   }
 }
