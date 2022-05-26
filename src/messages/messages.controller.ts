@@ -25,7 +25,7 @@ export class MessagesController {
   ) { }
 
   @Post()
-  async create(@Body() createMessageDto: CreateMessageDto) {
+  async create(@Request() req, @Body() createMessageDto: CreateMessageDto) {
     const user: User = await this.usersService.findByEmail(
       createMessageDto.email,
     );
@@ -36,7 +36,7 @@ export class MessagesController {
     if (!user.active) {
       throw new BadRequestException('Inactive user');
     }
-    return this.messagesService.create(user, createMessageDto);
+    return this.messagesService.create(req.user.email, user, createMessageDto);
   }
 
   @Get()

@@ -15,7 +15,7 @@ export class MessagesService {
     private notificationService: NotificationsService
   ) { }
 
-  async create(user: User, createMessageDto: CreateMessageDto) {
+  async create(senderEmail: string, user: User, createMessageDto: CreateMessageDto) {
     let message: Message = new Message();
     message.body = createMessageDto.body;
     message.user = user;
@@ -23,7 +23,7 @@ export class MessagesService {
     message = await this.messageRepository.save(message);
     let notification: Notification = new Notification();
     notification.user = user;
-    notification.senderEmail = user.email;
+    notification.senderEmail = senderEmail;
     await this.notificationService.create(notification);
     return message;
   }
