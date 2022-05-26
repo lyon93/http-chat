@@ -13,7 +13,8 @@ import {
 import { MessagesService } from './messages.service';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { User } from 'src/users/entities/user.entity';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+
 
 @Controller('messages')
 @UseGuards(JwtAuthGuard)

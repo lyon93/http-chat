@@ -10,6 +10,8 @@ describe('UsersService', () => {
     email: 'test@gmail.com',
     active: true,
     password: 'asdkjasd#',
+    messages: [],
+    notifications: [],
     username: 'test',
   };
   const mockUserRepository = {
