@@ -1,14 +1,23 @@
+import { UsersService } from './../users/users.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { MessagesController } from './messages.controller';
 import { MessagesService } from './messages.service';
 
 describe('MessagesController', () => {
   let controller: MessagesController;
-
+  const mockMessageService = {
+    findAll: jest.fn().mockImplementation((arg: any) => Promise.resolve([])),
+  };
+  const mockUsersService = {
+    findAll: jest.fn().mockImplementation((arg: any) => Promise.resolve([])),
+  };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [MessagesController],
-      providers: [MessagesService],
+      providers: [
+        { provide: MessagesService, useValue: mockMessageService },
+        { provide: UsersService, useValue: mockUsersService },
+      ],
     }).compile();
 
     controller = module.get<MessagesController>(MessagesController);

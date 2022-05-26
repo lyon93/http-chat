@@ -1,3 +1,5 @@
+import { Notification } from './../notifications/entities/notification.entity';
+import { NotificationsService } from './../notifications/notifications.service';
 import { Message } from './entities/message.entity';
 import { User } from './../users/entities/user.entity';
 import { Injectable } from '@nestjs/common';
@@ -10,13 +12,20 @@ export class MessagesService {
   constructor(
     @InjectRepository(Message)
     private messageRepository: Repository<Message>,
+    private notificationService: NotificationsService
   ) { }
 
-  create(user: User, createMessageDto: CreateMessageDto) {
+  async create(user: User, createMessageDto: CreateMessageDto) {
     let message: Message = new Message();
     message.body = createMessageDto.body;
     message.user = user;
-    return this.messageRepository.save(message);
+
+    message = await this.messageRepository.save(message);
+    let notification: Notification = new Notification();
+    notification.user = user;
+    notification.senderEmail = user.email;
+    await this.notificationService.create(notification);
+    return message;
   }
 
   findAll(user: User) {

@@ -1,3 +1,5 @@
+
+import { Exclude } from 'class-transformer';
 import { User } from './../../users/entities/user.entity';
 import {
   Column,
@@ -6,20 +8,19 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Exclude } from 'class-transformer';
 
 @Entity()
-export class Message {
+export class Notification {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  body: string;
+  senderEmail: string;
 
   @CreateDateColumn()
   createdDate: Date;
 
-  @ManyToOne(() => User, (user) => user.messages)
+  @ManyToOne(() => User, (user) => user.notifications)
   @Exclude()
   user: User;
 }
