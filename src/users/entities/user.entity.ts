@@ -1,3 +1,4 @@
+import { Notification } from './../../notifications/entities/notification.entity';
 import { Message } from './../../messages/entities/message.entity';
 import { Exclude } from 'class-transformer';
 import { MinLength } from 'class-validator';
@@ -23,4 +24,7 @@ export class User {
 
   @OneToMany(() => Message, (message) => message.user)
   messages: Message[];
+
+  @OneToMany(() => Notification, (notification) => notification.user)
+  notifications: Notification[];
 }
